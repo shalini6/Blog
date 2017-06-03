@@ -18,4 +18,29 @@
         	<p><em>{{ post.text|linebreaksbr }}</em></p>
         </div>
     </div>
+
+<hr>
+<span class="label label-primary"><a href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+</span>
+
+{% for comment in post.comments.all %}
+    {% if user.is_authenticated or comment.approved_comment %}
+    <div class="comment">
+        <font size="1px">{{ comment.created_date }}</font>
+        <br>
+        {% if not comment.approved_comment %}
+            <span class="label label-primary">
+                <a  href="{% url 'comment_remove' pk=comment.pk %}">Remove Comment</a>
+                &nbsp&nbsp
+                <a href="{% url 'comment_approve' pk=comment.pk %}">Approve Comment</a>
+            </span><br>
+        {% endif %}
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+    </div>
+    {% endif %}
+{% empty %}
+    <p>No comments here yet :(</p>
+{% endfor %}
+
 {% endblock %}
