@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+	{% for post in posts %}
+	    <div class="post">
+	        <div class="date">
+	        <br>
+	            <p><font  size="2px">Published: {{ post.published_date }}</font></p>
+	        </div>
+
+	        <div class="panel panel-primary">
+	        	<div class="panel-heading">
+	        	<h3 class="panel-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+	        	</div>
+	        	<div class="panel-body">
+	    		<p>{{ post.text|linebreaksbr }}</p>
+	    		</div>
+	   		 </div>
+
+	    </div>
+	{% endfor %}
+{% endblock %}
+        
